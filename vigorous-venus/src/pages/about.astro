@@ -1,0 +1,100 @@
+---
+const path = Astro.url.pathname;
+---
+
+<nav class="site-nav">
+  <a href="/" class={path === '/' ? 'active' : ''}>Home</a>
+  <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Essays</a>
+  <a href="/about/" class={path.startsWith('/about') ? 'active' : ''}>About</a>
+</nav>
+
+<main class="about">
+  <h1 class="name">PGE</h1>
+  <p class="subtitle small">aka. Elliot Sim</p>
+  <p class="subtitle small">the founder of Asswitch Studio</p>
+
+  <div class="bio">
+    <p>Plays with cameras and what cameras produce.</p>
+    <p>Writes in English and Chinese.</p>
+    <p>Matcha enthusiast.</p>
+    <p>Gallery goer.</p>
+    <p>SNL watcher.</p>
+    <p>Always wants to play tennis.</p>
+    <p>Fan of Tina Fey, Steve Jobs and Andy Warhol.</p>
+  </div>
+
+  <div class="contact">
+    <p>contact info: <a href="mailto:pp@asswitch.studio">pp@asswitch.studio</a></p>
+    <p>instagram: <a href="https://instagram.com/P9653_">@P9653_</a></p>
+  </div>
+</main>
+
+<style>
+.site-nav {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.2rem;
+  font-size: 0.95rem;
+}
+
+.site-nav a {
+  margin-right: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.site-nav a.active {
+  position: relative;
+}
+
+.site-nav a.active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -0.5rem;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 6px;
+  background: #c00;
+  border-radius: 50%;
+}
+
+.about {
+  max-width: 32rem;
+  margin: 30vh auto 0 auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.about h1.name {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-bottom: 0.6rem;
+}
+
+.subtitle {
+  margin: 0;
+}
+
+.subtitle.small {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.bio {
+  margin-top: 1.5rem;
+}
+
+.bio p {
+  margin: 0.25rem 0;
+}
+
+.contact {
+  margin-top: 3rem;
+  font-size: 0.85rem;
+}
+
+.contact a {
+  text-decoration: none;
+}
+</style>

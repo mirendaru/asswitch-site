@@ -1,0 +1,53 @@
+---
+const path = Astro.url.pathname;
+---
+
+
+<nav class="site-nav">
+  <a href="/" class={path === '/' ? 'active' : ''}>Home</a>
+  <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Essays</a>
+  <a href="/about/" class={path.startsWith('/about') ? 'active' : ''}>About</a>
+</nav>
+
+<img src="/images/home.jpg" alt="" class="home-image" />
+
+<style>
+  .site-nav {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .site-nav a {
+    margin-right: 1rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .site-nav a:hover {
+    text-decoration: underline;
+  }
+
+  .site-nav a.active {
+    position: relative;
+  }
+
+  .site-nav a.active::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.5rem;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #c00;
+    border-radius: 50%;
+  }
+
+  .home-image {
+  display: block;
+  margin: 24vh 0 0 10%;
+  max-width: 22%;
+}
+</style>

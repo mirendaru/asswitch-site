@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const path = Astro.url.pathname;
+---
+
+<html lang="en">
+	<head>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+/>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+			.site-nav {
+			  position: fixed;
+			  top: 1.5rem;
+			  left: 1.2rem;
+			  font-size: 0.95rem;
+			}
+
+			.site-nav a {
+			  margin-right: 1rem;
+			  text-decoration: none;
+			  color: inherit;
+			}
+
+			.site-nav a.active {
+			  position: relative;
+			}
+
+			.site-nav a.active::after {
+			  content: '';
+			  position: absolute;
+			  left: 50%;
+			  bottom: -0.5rem;
+			  transform: translateX(-50%);
+			  width: 6px;
+			  height: 6px;
+			  background: #c00;
+			  border-radius: 50%;
+			}
+
+			.article {
+			  max-width: 42rem;
+			  margin-top: 8rem;
+			  margin-left: 16rem;
+			  margin-right: 0;
+			  font-family: 'EB Garamond', serif;
+			}
+
+			.article-header h1 {
+			  font-size: 1.6rem;
+			  font-weight: normal;
+			  margin-bottom: 0.5rem;
+			}
+
+			.description {
+			  margin: 0;
+			  color: #777;
+			  font-size: 0.95rem;
+			}
+
+			.date {
+			  margin-top: 0.2rem;
+			  color: #999;
+			  font-size: 0.85rem;
+			}
+
+			.content {
+			  margin-top: 2.5rem;
+			  line-height: 1.7;
+			  font-size: 1rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<main>
+		  <nav class="site-nav">
+		    <a href="/" class={path === '/' ? 'active' : ''}>Home</a>
+		    <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Essays</a>
+		    <a href="/about/" class={path.startsWith('/about') ? 'active' : ''}>About</a>
+		  </nav>
+
+		  <article class="article">
+		    <header class="article-header">
+		      <h1>{title}</h1>
+		      {description && <p class="description">{description}</p>}
+		      <p class="date">
+		        <FormattedDate date={pubDate} />
+		      </p>
+		    </header>
+
+		    <div class="content">
+		      <slot />
+		    </div>
+		  </article>
+		</main>
+	</body>
+</html>

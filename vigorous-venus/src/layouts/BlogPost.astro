@@ -28,6 +28,14 @@ const path = Astro.url.pathname;
 			  top: 1.5rem;
 			  left: 1.2rem;
 			  font-size: 0.95rem;
+			  transition: transform 0.3s ease, opacity 0.3s ease;
+			}
+
+			@media (max-width: 768px) {
+			  .site-nav.is-hidden {
+			    transform: translateY(-120%);
+			    opacity: 0;
+			  }
 			}
 
 			.site-nav a {
@@ -108,5 +116,31 @@ const path = Astro.url.pathname;
 		    </div>
 		  </article>
 		</main>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const nav = document.querySelector('.site-nav');
+    if (!nav) return;
+
+    function isMobile() {
+      return window.innerWidth <= 768;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!isMobile()) return;
+
+      const currentScrollY = window.scrollY;
+
+      // 只要离开顶部一定距离，就隐藏导航
+      if (currentScrollY > 80) {
+        nav.classList.add('is-hidden');
+      }
+
+      // 只有滚回接近顶部，才重新显示
+      if (currentScrollY < 20) {
+        nav.classList.remove('is-hidden');
+      }
+    });
+  });
+</script>
 	</body>
 </html>

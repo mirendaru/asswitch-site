@@ -1,12 +1,16 @@
 ---
 const path = Astro.url.pathname;
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Header from '../components/Header.astro';
 ---
 
-<nav class="site-nav">
-  <a href="/" class={path === '/' ? 'active' : ''}>Home</a>
-  <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Essays</a>
-  <a href="/about/" class={path.startsWith('/about') ? 'active' : ''}>About</a>
-</nav>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{SITE_TITLE}</title>
+  <meta name="description" content={SITE_DESCRIPTION} />
+</head>
+
+<Header />
 
 <main class="about">
   <h1 class="name">PGE</h1>
@@ -30,34 +34,7 @@ const path = Astro.url.pathname;
 </main>
 
 <style>
-.site-nav {
-  position: fixed;
-  top: 1.5rem;
-  left: 1.2rem;
-  font-size: 0.95rem;
-}
-
-.site-nav a {
-  margin-right: 1rem;
-  text-decoration: none;
-  color: inherit;
-}
-
-.site-nav a.active {
-  position: relative;
-}
-
-.site-nav a.active::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -0.5rem;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background: #c00;
-  border-radius: 50%;
-}
+ 
 
 .about {
   max-width: 32rem;
@@ -96,5 +73,25 @@ const path = Astro.url.pathname;
 
 .contact a {
   text-decoration: none;
+}
+
+/* Responsive tweaks for small screens */
+@media (max-width: 900px) {
+  .about {
+    margin: 20vh auto 0;
+    max-width: 40rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .about {
+    margin: 12vh auto 0;
+    padding: 0 1rem;
+    max-width: 92%;
+  }
+}
+
+@media (max-width: 360px) {
+  .about { margin-top: 10vh; }
 }
 </style>

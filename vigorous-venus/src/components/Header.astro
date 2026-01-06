@@ -1,14 +1,16 @@
 ---
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+
+const { variant = 'minimal' } = Astro.props;
 ---
 
 <header>
-	<nav>
+	<nav class:list={["site-nav", { minimal: variant === 'minimal' }]}> 
 		<h2><a href="/">{SITE_TITLE}</a></h2>
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
+			<HeaderLink href="/blog">Essays</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
 		<div class="social-links">
@@ -48,6 +50,7 @@ import HeaderLink from './HeaderLink.astro';
 		padding: 0 1em;
 		background: white;
 		box-shadow: 0 2px 8px rgba(var(--black), 5%);
+		font-family: "EB Garamond", Georgia, "Times New Roman", serif;
 	}
 	h2 {
 		margin: 0;
@@ -82,4 +85,46 @@ import HeaderLink from './HeaderLink.astro';
 			display: none;
 		}
 	}
+
+/* Minimal variant: emulates original index.astro compact nav with red dot */
+.site-nav.minimal {
+	position: absolute;
+	top: 1.5rem;
+	left: 1.2rem;
+	background: transparent;
+	box-shadow: none;
+	padding: 0;
+	font-size: 0.95rem;
+	line-height: 1.2;
+}
+.site-nav.minimal h2 {
+	display: none;
+}
+.site-nav.minimal .internal-links {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+.site-nav.minimal .internal-links a {
+	padding: 0;
+	margin: 0;
+	border-bottom: none;
+	position: relative;
+	font-size: inherit;
+	line-height: inherit;
+}
+.site-nav.minimal .internal-links a.active::after {
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: -0.65rem;
+	transform: translateX(-50%);
+	width: 6px;
+	height: 6px;
+	background: #c00;
+	border-radius: 50%;
+}
+.site-nav.minimal .social-links {
+	display: none;
+}
 </style>

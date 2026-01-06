@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -23,42 +24,7 @@ const path = Astro.url.pathname;
 				max-width: 100%;
 				margin: 0;
 			}
-			.site-nav {
-			  position: fixed;
-			  top: 1.5rem;
-			  left: 1.2rem;
-			  font-size: 0.95rem;
-			  transition: transform 0.3s ease, opacity 0.3s ease;
-			}
-
-			@media (max-width: 768px) {
-			  .site-nav.is-hidden {
-			    transform: translateY(-120%);
-			    opacity: 0;
-			  }
-			}
-
-			.site-nav a {
-			  margin-right: 1rem;
-			  text-decoration: none;
-			  color: inherit;
-			}
-
-			.site-nav a.active {
-			  position: relative;
-			}
-
-			.site-nav a.active::after {
-			  content: '';
-			  position: absolute;
-			  left: 50%;
-			  bottom: -0.5rem;
-			  transform: translateX(-50%);
-			  width: 6px;
-			  height: 6px;
-			  background: #c00;
-			  border-radius: 50%;
-			}
+						/* nav is provided by shared Header component */
 
 			.article {
 			  max-width: 42rem;
@@ -96,11 +62,7 @@ const path = Astro.url.pathname;
 
 	<body>
 		<main>
-		  <nav class="site-nav">
-		    <a href="/" class={path === '/' ? 'active' : ''}>Home</a>
-		    <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Essays</a>
-		    <a href="/about/" class={path.startsWith('/about') ? 'active' : ''}>About</a>
-		  </nav>
+		  <Header />
 
 		  <article class="article">
 		    <header class="article-header">

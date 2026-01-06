@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseHead from '../../components/BaseHead.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import Header from '../../components/Header.astro';
 
 const path = Astro.url.pathname;
 
@@ -22,39 +23,6 @@ const posts = (await getCollection('blog')).sort(
 html {
   margin: 0;
 }
-.site-nav {
-  position: fixed;
-  top: 1.5rem;
-  left: 1.2rem;
-  font-size: 0.95rem;
-}
-
-.site-nav a {
-  margin-right: 1rem;
-  text-decoration: none;
-  color: inherit;
-}
-
-.site-nav a:hover {
-  text-decoration: underline;
-}
-
-.site-nav a.active {
-  position: relative;
-}
-
-.site-nav a.active::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -0.5rem;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 6px;
-  background: #c00;
-  border-radius: 50%;
-}
-
 main {
   width: 100%;
   margin-top: 6rem;
@@ -76,19 +44,28 @@ li a {
   font-size: 0.95rem;
   text-decoration: none;
   color: inherit;
+  line-height: 1.3;
 }
 
 li a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  li a {
+    font-size: 0.8rem;
+  }
+
+  li a::before {
+    content: '✎ ';
+    color: #c00;
+    margin-right: 0.3rem;
+  }
+}
 		</style>
 	</head>
 	<body>
-		<nav class="site-nav">
-			<a href="/" class={path === '/' ? 'active' : ''}>Home</a>
-			<a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Essays</a>
-			<a href="/about/" class={path.startsWith('/about') ? 'active' : ''}>About</a>
-		</nav>
+      <Header />
 
 		<main>
 			<ul>

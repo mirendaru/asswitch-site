@@ -1,49 +1,22 @@
 ---
 const path = Astro.url.pathname;
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Header from '../components/Header.astro';
 ---
 
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{SITE_TITLE}</title>
+  <meta name="description" content={SITE_DESCRIPTION} />
+</head>
 
-<nav class="site-nav">
-  <a href="/" class={path === '/' ? 'active' : ''}>Home</a>
-  <a href="/blog/" class={path.startsWith('/blog') ? 'active' : ''}>Essays</a>
-  <a href="/about/" class={path.startsWith('/about') ? 'active' : ''}>About</a>
-</nav>
+
+<Header />
 
 <img src="/images/home.jpg" alt="" class="home-image" />
 
 <style>
-  .site-nav {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.2rem;
-    font-size: 0.95rem;
-  }
-
-  .site-nav a {
-    margin-right: 1rem;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .site-nav a:hover {
-    text-decoration: underline;
-  }
-
-  .site-nav a.active {
-    position: relative;
-  }
-
-  .site-nav a.active::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -0.5rem;
-    transform: translateX(-50%);
-    width: 6px;
-    height: 6px;
-    background: #c00;
-    border-radius: 50%;
-  }
+  
 
   .home-image {
   display: block;
@@ -51,10 +24,23 @@ const path = Astro.url.pathname;
   max-width: 22%;
 }
 
-@media (max-width: 768px) {
+/* Responsive tweaks for small screens */
+@media (max-width: 900px) {
   .home-image {
-    margin: 18vh auto 0 auto;
-    max-width: 70%;
+    margin: 20vh auto 0;
+    max-width: 60%;
   }
+}
+
+@media (max-width: 600px) {
+  .home-image {
+    margin: 12vh auto 0;
+    max-width: 92%;
+    display: block;
+  }
+}
+
+@media (max-width: 360px) {
+  .home-image { max-width: 96%; margin-top: 10vh; }
 }
 </style>

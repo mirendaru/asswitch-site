@@ -18,7 +18,7 @@ Did not want to go out. Began arranging a same-city courier.
 Cooked a pack of instant noodles—expired by one month—for breakfast.
 
 Looked through cake shops mini apps.
-The one I wanted required a 48-hour preorder. No longer possible.
+The one I wanted required a 48-hour preorder. No longer possible.  
 
 Writing.
 

@@ -1,6 +1,6 @@
 ---
-title: 'Observations on Humanity While Working in a Bookstore'
-description: 'Working in a bookstore is insulting.'
+title: 'Bookstore Observations'
+description: 'Here is what I saw when I was working in a bookstore in 2018.'
 pubDate: 'Jan 06 2026'
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: 'Thoughts On Low Birth Rate'
+title: 'Notes On Low Birth Rate'
 description: 'The primary reason for low birth rates is that people no longer know what love is.'
 pubDate: 'Jan 20 2026'
 ---

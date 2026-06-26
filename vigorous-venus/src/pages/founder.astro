@@ -1,0 +1,99 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Founder — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<a class="home-top" href="/">Asswitch Studio</a>
+
+		<main class="founder">
+			<h1 class="name">PGE</h1>
+			<p class="subtitle">aka. Elliot Sim</p>
+			<p class="subtitle">the founder of Asswitch Studio</p>
+
+			<div class="bio">
+				<p>Plays with cameras and what cameras produce.</p>
+				<p>Writes in English and Chinese.</p>
+				<p>Matcha enthusiast.</p>
+				<p>Gallery goer.</p>
+				<p>SNL watcher.</p>
+				<p>Always wants to play tennis.</p>
+				<p>Fan of Tina Fey, Steve Jobs and Andy Warhol.</p>
+			</div>
+
+			<div class="contact">
+				<p>contact info: <a href="mailto:pp@asswitch.studio">pp@asswitch.studio</a></p>
+				<p>instagram: <a href="https://instagram.com/P9653_">@P9653_</a></p>
+			</div>
+		</main>
+
+		<style>
+			.founder {
+				max-width: 32rem;
+				margin: 30vh auto 0 auto;
+				font-size: 0.95rem;
+				line-height: 1.6;
+			}
+
+			.name {
+				font-size: 1.5rem;
+				font-weight: normal;
+				margin-bottom: 0.6rem;
+			}
+
+			.subtitle {
+				margin: 0;
+				font-size: 0.8rem;
+				opacity: 0.7;
+			}
+
+			.bio {
+				margin-top: 1.5rem;
+			}
+			.bio p {
+				margin: 0.25rem 0;
+			}
+
+			.contact {
+				margin-top: 3rem;
+				font-size: 0.85rem;
+			}
+			.contact a {
+				text-decoration: none;
+			}
+			.contact a:hover {
+				text-decoration: underline;
+			}
+
+			.home-top {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				display: block;
+				text-align: center;
+				padding: 1.3rem 0;
+				background: #fff;
+				font-size: 0.85rem;
+				letter-spacing: 0.02em;
+				color: #888;
+				text-decoration: none;
+			}
+			.home-top:hover {
+				color: #111;
+			}
+
+			@media (max-width: 999px) {
+				.founder {
+					margin: 18vh auto 0;
+					padding: 0 1.2rem;
+					max-width: 100%;
+				}
+			}
+		</style>
+	</body>
+</html>

@@ -9,6 +9,8 @@ const blog = defineCollection({
 		z.object({
 			title: z.string(),
 			description: z.string(),
+			// Who wrote it. Optional — falls back to DEFAULT_AUTHOR when omitted.
+			author: z.string().optional(),
 			// Transform string to Date object
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),

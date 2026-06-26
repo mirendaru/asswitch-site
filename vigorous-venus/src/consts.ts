@@ -3,3 +3,6 @@
 
 export const SITE_TITLE = 'Asswitch';
 export const SITE_DESCRIPTION = "this world isn't real";
+
+// Default byline for posts that don't set `author` in their frontmatter.
+export const DEFAULT_AUTHOR = 'PGE';

@@ -1,46 +1,283 @@
 ---
-const path = Astro.url.pathname;
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import Header from '../components/Header.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+// Each scattered word. `top`/`left` are percentages of the viewport.
+// Swap `href` to real pages as they get built; '#' = placeholder for now.
+const words = [
+	{ label: 'Founder', href: '/founder', top: 23, left: 20 },
+	{ label: 'publication', href: '#', top: 31, left: 8 },
+	{ label: 'murmurs', href: '#', top: 36, left: 35 },
+	{ label: 'PAHF！', href: '#', top: 26, left: 58 },
+	{ label: 'No More School', href: '#', top: 28, left: 80 },
+	{ label: 'Reviews', href: '#', top: 43, left: 12 },
+	{ label: 'Essays', href: '/blog', top: 47, left: 27 },
+	{ label: 'applications', href: '#', top: 41, left: 68 },
+	{ label: 'the empty chairs', href: '#', top: 54, left: 46 },
+	{ label: 'chronicles', href: '#', top: 50, left: 83 },
+	{ label: 'Designing Summer', href: '#', top: 59, left: 64 },
+	{ label: 'research', href: '#', top: 62, left: 36 },
+	{ label: 'home improvement', href: '#', top: 67, left: 15 },
+	{ label: 'anti social media association', href: '#', top: 71, left: 54 },
+	{ label: 'RUSTICITAS ANIMI ET NUDA ORATIO', href: '#', top: 74, left: 74 },
+	{ label: 'MyMoodyMac', href: '#', top: 77, left: 6 },
+	{ label: 'papercunt', href: '#', top: 81, left: 25 },
+	{ label: 'contact', href: '#', top: 83, left: 64 },
+	{ label: 'about', href: '/about', top: 87, left: 40 },
+];
 ---
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{SITE_TITLE}</title>
-  <meta name="description" content={SITE_DESCRIPTION} />
-</head>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{SITE_TITLE}</title>
+		<meta name="description" content={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<main class="stage" style="background-image: url('/images/home-background.jpg')">
+			<h1 class="wordmark">Asswitch Studio</h1>
 
+			<nav class="scatter" aria-label="Site">
+				{
+					words.map((w) => (
+						<a
+							class:list={['word', w.href === '#' ? 'inactive' : 'active']}
+							href={w.href}
+							style={`top:${w.top}%; left:${w.left}%`}
+						>
+							{w.label}
+						</a>
+					))
+				}
+			</nav>
 
-<Header />
+			<!-- Plain stacked fallback for small screens -->
+			<nav class="stacked" aria-label="Site (compact)">
+				{words.map((w) => <a href={w.href}>{w.label}</a>)}
+			</nav>
 
-<img src="/images/home.jpg" alt="" class="home-image" />
+			<p class="construction">some pages are under construction</p>
+		</main>
 
-<style>
-  
+		<style is:global>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: #000;
+			}
+		</style>
 
-  .home-image {
-  display: block;
-  margin: 24vh 0 0 10%;
-  max-width: 22%;
-}
+		<style>
+			.stage {
+				position: relative;
+				width: 100%;
+				min-height: 100vh;
+				background-size: cover;
+				background-position: center;
+				overflow: hidden;
+				font-family: Helvetica, Arial, sans-serif;
+				color: #fff;
+			}
 
-/* Responsive tweaks for small screens */
-@media (max-width: 900px) {
-  .home-image {
-    margin: 20vh auto 0;
-    max-width: 60%;
-  }
-}
+			.wordmark {
+				position: absolute;
+				top: 0.12em;
+				left: 50%;
+				transform: translateX(-50%);
+				margin: 0;
+				white-space: nowrap;
+				font-size: clamp(2.5rem, 9vw, 8rem);
+				font-weight: 700;
+				letter-spacing: -0.02em;
+				pointer-events: none;
+			}
 
-@media (max-width: 600px) {
-  .home-image {
-    margin: 12vh auto 0;
-    max-width: 92%;
-    display: block;
-  }
-}
+			.scatter {
+				position: absolute;
+				inset: 0;
+			}
 
-@media (max-width: 360px) {
-  .home-image { max-width: 96%; margin-top: 10vh; }
-}
-</style>
+			.construction {
+				position: fixed;
+				bottom: 0.9rem;
+				left: 50%;
+				transform: translateX(-50%);
+				margin: 0;
+				font-size: 0.7rem;
+				letter-spacing: 0.03em;
+				color: rgba(255, 255, 255, 0.7);
+				pointer-events: none;
+			}
+
+			.word {
+				position: absolute;
+				transform: translate(-50%, -50%);
+				color: #fff;
+				text-decoration: none;
+				font-size: clamp(0.8rem, 1.05vw, 1.05rem);
+				white-space: nowrap;
+				cursor: grab;
+				user-select: none;
+				-webkit-user-select: none;
+				touch-action: none;
+				transition: color 0.25s ease;
+			}
+
+			/* Words with a real page: white, turn red on hover */
+			.word.active {
+				color: #fff;
+			}
+			.word.active:hover,
+			.word.active:focus-visible {
+				color: #a33636;
+				outline: none;
+			}
+			.word.active.dragging {
+				color: #a33636;
+			}
+
+			/* Words still under construction: muted grey, no red */
+			.word.inactive {
+				color: #8f8f8f;
+			}
+
+			.word.dragging {
+				cursor: grabbing;
+			}
+
+			.stacked {
+				display: none;
+			}
+
+			/* On small screens: hide the scatter, show a clean stacked list */
+			@media (max-width: 768px) {
+				.stage {
+					min-height: 100vh;
+					padding: 2rem 1.25rem 3rem;
+					box-sizing: border-box;
+				}
+				.wordmark {
+					position: static;
+					transform: none;
+					white-space: normal;
+					font-size: clamp(2rem, 11vw, 3.5rem);
+					margin-bottom: 1.5rem;
+				}
+				.scatter {
+					display: none;
+				}
+				.stacked {
+					display: flex;
+					flex-direction: column;
+					gap: 1rem;
+				}
+				.stacked a {
+					color: #fff;
+					text-decoration: none;
+					font-size: 1.15rem;
+				}
+				.stacked a:active {
+					color: #a33636;
+				}
+			}
+		</style>
+
+		<script>
+			// Scattered words: drag to reposition (but never over the wordmark),
+			// single click does nothing, double click navigates.
+			function initScatter() {
+				const scatter = document.querySelector<HTMLElement>('.scatter');
+				const wordmark = document.querySelector<HTMLElement>('.wordmark');
+				if (!scatter) return;
+				const words = scatter.querySelectorAll<HTMLAnchorElement>('.word');
+
+				const overlaps = (a: DOMRect, b: DOMRect, pad = 6) =>
+					!(
+						a.right < b.left + pad ||
+						a.left > b.right - pad ||
+						a.bottom < b.top + pad ||
+						a.top > b.bottom - pad
+					);
+
+				words.forEach((el) => {
+					let active = false;
+					let startX = 0;
+					let startY = 0;
+					let baseLeft = 0;
+					let baseTop = 0;
+					let goodLeft = 0;
+					let goodTop = 0;
+
+					el.addEventListener('pointerdown', (e) => {
+						e.preventDefault();
+						const scRect = scatter.getBoundingClientRect();
+						const elRect = el.getBoundingClientRect();
+						// Switch from percent + translate centering to absolute top-left px
+						baseLeft = elRect.left - scRect.left;
+						baseTop = elRect.top - scRect.top;
+						el.style.left = baseLeft + 'px';
+						el.style.top = baseTop + 'px';
+						el.style.transform = 'none';
+						goodLeft = baseLeft;
+						goodTop = baseTop;
+						startX = e.clientX;
+						startY = e.clientY;
+						active = true;
+						el.classList.add('dragging');
+						el.setPointerCapture(e.pointerId);
+					});
+
+					el.addEventListener('pointermove', (e) => {
+						if (!active) return;
+						const scRect = scatter.getBoundingClientRect();
+						const w = el.offsetWidth;
+						const h = el.offsetHeight;
+						let nl = baseLeft + (e.clientX - startX);
+						let nt = baseTop + (e.clientY - startY);
+						// Keep inside the stage
+						nl = Math.max(0, Math.min(nl, scRect.width - w));
+						nt = Math.max(0, Math.min(nt, scRect.height - h));
+						// Reject any position that would overlap the wordmark
+						if (wordmark) {
+							const cand = new DOMRect(scRect.left + nl, scRect.top + nt, w, h);
+							if (overlaps(cand, wordmark.getBoundingClientRect())) {
+								el.style.left = goodLeft + 'px';
+								el.style.top = goodTop + 'px';
+								return;
+							}
+						}
+						goodLeft = nl;
+						goodTop = nt;
+						el.style.left = nl + 'px';
+						el.style.top = nt + 'px';
+					});
+
+					const end = (e: PointerEvent) => {
+						if (!active) return;
+						active = false;
+						el.classList.remove('dragging');
+						try {
+							el.releasePointerCapture(e.pointerId);
+						} catch {}
+					};
+					el.addEventListener('pointerup', end);
+					el.addEventListener('pointercancel', end);
+
+					// A single click should never navigate
+					el.addEventListener('click', (e) => e.preventDefault());
+
+					// Double click enters the page
+					el.addEventListener('dblclick', (e) => {
+						e.preventDefault();
+						const href = el.getAttribute('href');
+						if (href && href !== '#') window.location.href = href;
+					});
+				});
+			}
+
+			initScatter();
+		</script>
+	</body>
+</html>

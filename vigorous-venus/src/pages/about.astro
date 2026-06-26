@@ -1,97 +1,66 @@
 ---
-const path = Astro.url.pathname;
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import Header from '../components/Header.astro';
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 ---
 
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{SITE_TITLE}</title>
-  <meta name="description" content={SITE_DESCRIPTION} />
-</head>
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<a class="home-top" href="/">Asswitch Studio</a>
 
-<Header />
+		<main class="about">
+			<p>
+				Asswitch Studio was founded in 2016 by PGE with the help of Hynes Chan.
+			</p>
+			<p>
+				We are trying out everything because that’s just what life is about.
+			</p>
+		</main>
 
-<main class="about">
-  <h1 class="name">PGE</h1>
-  <p class="subtitle small">aka. Elliot Sim</p>
-  <p class="subtitle small">the founder of Asswitch Studio</p>
+		<style>
+			.about {
+				width: fit-content;
+				margin: 32vh auto 0 auto;
+				font-size: 1.05rem;
+				line-height: 1.7;
+			}
+			.about p {
+				margin: 0 0 1.2rem 0;
+				white-space: nowrap;
+			}
 
-  <div class="bio">
-    <p>Plays with cameras and what cameras produce.</p>
-    <p>Writes in English and Chinese.</p>
-    <p>Matcha enthusiast.</p>
-    <p>Gallery goer.</p>
-    <p>SNL watcher.</p>
-    <p>Always wants to play tennis.</p>
-    <p>Fan of Tina Fey, Steve Jobs and Andy Warhol.</p>
-  </div>
+			.home-top {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				display: block;
+				text-align: center;
+				padding: 1.3rem 0;
+				background: #fff;
+				font-size: 0.85rem;
+				letter-spacing: 0.02em;
+				color: #888;
+				text-decoration: none;
+			}
+			.home-top:hover {
+				color: #111;
+			}
 
-  <div class="contact">
-    <p>contact info: <a href="mailto:pp@asswitch.studio">pp@asswitch.studio</a></p>
-    <p>instagram: <a href="https://instagram.com/P9653_">@P9653_</a></p>
-  </div>
-</main>
-
-<style>
- 
-
-.about {
-  max-width: 32rem;
-  margin: 30vh auto 0 auto;
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-.about h1.name {
-  font-size: 1.5rem;
-  font-weight: normal;
-  margin-bottom: 0.6rem;
-}
-
-.subtitle {
-  margin: 0;
-}
-
-.subtitle.small {
-  font-size: 0.8rem;
-  opacity: 0.7;
-}
-
-.bio {
-  margin-top: 1.5rem;
-}
-
-.bio p {
-  margin: 0.25rem 0;
-}
-
-.contact {
-  margin-top: 3rem;
-  font-size: 0.85rem;
-}
-
-.contact a {
-  text-decoration: none;
-}
-
-/* Responsive tweaks for small screens */
-@media (max-width: 900px) {
-  .about {
-    margin: 20vh auto 0;
-    max-width: 40rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .about {
-    margin: 12vh auto 0;
-    padding: 0 1rem;
-    max-width: 92%;
-  }
-}
-
-@media (max-width: 360px) {
-  .about { margin-top: 10vh; }
-}
-</style>
+			@media (max-width: 999px) {
+				.about {
+					margin: 20vh auto 0;
+					padding: 0 1.2rem;
+					width: auto;
+					max-width: 100%;
+					font-size: 1rem;
+				}
+				.about p {
+					white-space: normal;
+				}
+			}
+		</style>
+	</body>
+</html>

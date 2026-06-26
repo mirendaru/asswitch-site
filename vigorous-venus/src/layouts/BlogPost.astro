@@ -3,7 +3,6 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -20,18 +19,33 @@ const path = Astro.url.pathname;
 		<BaseHead title={title} description={description} />
 		<style>
 			main {
-				width: calc(100% - 2em);
+				width: 100%;
 				max-width: 100%;
 				margin: 0;
 			}
-						/* nav is provided by shared Header component */
+
+			.home-top {
+			  position: sticky;
+			  top: 0;
+			  z-index: 10;
+			  display: block;
+			  text-align: center;
+			  padding: 1.3rem 0;
+			  background: #fff;
+			  font-size: 0.85rem;
+			  letter-spacing: 0.02em;
+			  color: #888;
+			  text-decoration: none;
+			}
+			.home-top:hover {
+			  color: #111;
+			}
 
 			.article {
 			  max-width: 42rem;
-			  margin-top: 8rem;
-			  margin-left: 16rem;
-			  margin-right: 0;
-			  font-family: 'EB Garamond', serif;
+			  margin: 3rem auto 0;
+			  padding: 0 1.2rem;
+			  font-family: 'Libre Caslon Text', Georgia, serif;
 			}
 
 			.article-header h1 {
@@ -61,9 +75,9 @@ const path = Astro.url.pathname;
 	</head>
 
 	<body>
-		<main>
-		  <Header />
+		<a class="home-top" href="/">Asswitch Studio</a>
 
+		<main>
 		  <article class="article">
 		    <header class="article-header">
 		      <h1>{title}</h1>
@@ -78,31 +92,5 @@ const path = Astro.url.pathname;
 		    </div>
 		  </article>
 		</main>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const nav = document.querySelector('.site-nav');
-    if (!nav) return;
-
-    function isMobile() {
-      return window.innerWidth <= 768;
-    }
-
-    window.addEventListener('scroll', () => {
-      if (!isMobile()) return;
-
-      const currentScrollY = window.scrollY;
-
-      // 只要离开顶部一定距离，就隐藏导航
-      if (currentScrollY > 80) {
-        nav.classList.add('is-hidden');
-      }
-
-      // 只有滚回接近顶部，才重新显示
-      if (currentScrollY < 20) {
-        nav.classList.remove('is-hidden');
-      }
-    });
-  });
-</script>
 	</body>
 </html>

@@ -18,7 +18,7 @@ const words = [
 	{ label: 'research', href: '#', top: 62, left: 36 },
 	{ label: 'home improvement', href: '#', top: 67, left: 15 },
 	{ label: 'anti social media association', href: '#', top: 71, left: 54 },
-	{ label: 'RUSTICITAS ANIMI ET NUDA ORATIO', href: '#', top: 74, left: 74 },
+	{ label: 'RUSTICITAS ANIMI ET NUDA ORATIO', href: '/rusticitas', top: 74, left: 74 },
 	{ label: 'MyMoodyMac', href: '#', top: 77, left: 6 },
 	{ label: 'papercunt', href: '#', top: 81, left: 25 },
 	{ label: 'contact', href: '#', top: 83, left: 64 },
@@ -125,26 +125,26 @@ const words = [
 				transition: color 0.25s ease;
 			}
 
-			/* Words with a real page: white, turn red on hover */
+			/* Words with a real page: white, turn green on hover */
 			.word.active {
 				color: #fff;
 			}
 			.word.active:hover,
 			.word.active:focus-visible {
-				color: #a33636;
+				color: #b9e580;
 				outline: none;
 			}
 			.word.active.dragging {
-				color: #a33636;
+				color: #b9e580;
 			}
 
-			/* Words still under construction: muted grey, no red */
+			/* Words still under construction: muted grey */
 			.word.inactive {
 				color: #8f8f8f;
 			}
 
 			.word.dragging {
-				cursor: grabbing;
+				cursor: all-scroll;
 			}
 
 			.stacked {
@@ -179,14 +179,34 @@ const words = [
 					font-size: 1.15rem;
 				}
 				.stacked a:active {
-					color: #a33636;
+					color: #b9e580;
 				}
 			}
 		</style>
 
 		<script>
-			// Scattered words: drag to reposition (but never over the wordmark),
-			// single click does nothing, double click navigates.
+			// Scattered words: press-and-hold to drag (never over the wordmark),
+			// a plain click (no drag) navigates. Dragged positions persist
+			// across visits via localStorage.
+			const STORAGE_KEY = 'asswitch:scatter-positions';
+			const DRAG_THRESHOLD = 4; // px of movement before a press counts as a drag
+
+			function loadPositions(): Record<string, { top: number; left: number }> {
+				try {
+					return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+				} catch {
+					return {};
+				}
+			}
+
+			function savePosition(label: string, topPct: number, leftPct: number) {
+				const all = loadPositions();
+				all[label] = { top: topPct, left: leftPct };
+				try {
+					localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+				} catch {}
+			}
+
 			function initScatter() {
 				const scatter = document.querySelector<HTMLElement>('.scatter');
 				const wordmark = document.querySelector<HTMLElement>('.wordmark');
@@ -201,8 +221,18 @@ const words = [
 						a.top > b.bottom - pad
 					);
 
+				const saved = loadPositions();
+
 				words.forEach((el) => {
+					const label = el.textContent?.trim() ?? '';
+					const pos = saved[label];
+					if (pos) {
+						el.style.top = pos.top + '%';
+						el.style.left = pos.left + '%';
+					}
+
 					let active = false;
+					let dragged = false;
 					let startX = 0;
 					let startY = 0;
 					let baseLeft = 0;
@@ -225,12 +255,19 @@ const words = [
 						startX = e.clientX;
 						startY = e.clientY;
 						active = true;
+						dragged = false;
 						el.classList.add('dragging');
 						el.setPointerCapture(e.pointerId);
 					});
 
 					el.addEventListener('pointermove', (e) => {
 						if (!active) return;
+						if (
+							Math.abs(e.clientX - startX) > DRAG_THRESHOLD ||
+							Math.abs(e.clientY - startY) > DRAG_THRESHOLD
+						) {
+							dragged = true;
+						}
 						const scRect = scatter.getBoundingClientRect();
 						const w = el.offsetWidth;
 						const h = el.offsetHeight;
@@ -261,16 +298,23 @@ const words = [
 						try {
 							el.releasePointerCapture(e.pointerId);
 						} catch {}
+						if (dragged) {
+							const scRect = scatter.getBoundingClientRect();
+							const centerLeftPct = ((goodLeft + el.offsetWidth / 2) / scRect.width) * 100;
+							const centerTopPct = ((goodTop + el.offsetHeight / 2) / scRect.height) * 100;
+							savePosition(label, centerTopPct, centerLeftPct);
+						}
 					};
 					el.addEventListener('pointerup', end);
 					el.addEventListener('pointercancel', end);
 
-					// A single click should never navigate
-					el.addEventListener('click', (e) => e.preventDefault());
-
-					// Double click enters the page
-					el.addEventListener('dblclick', (e) => {
+					// A plain click (no drag in between) navigates.
+					el.addEventListener('click', (e) => {
 						e.preventDefault();
+						if (dragged) {
+							dragged = false;
+							return;
+						}
 						const href = el.getAttribute('href');
 						if (href && href !== '#') window.location.href = href;
 					});

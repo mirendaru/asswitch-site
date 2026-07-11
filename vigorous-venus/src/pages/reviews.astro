@@ -1,0 +1,158 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_DESCRIPTION, SITE_TITLE, DEFAULT_AUTHOR } from '../consts';
+
+const posts = (await getCollection('blog', ({ data }) => data.section === 'review')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+function formatDDMMYYYY(date: Date) {
+	const d = String(date.getDate()).padStart(2, '0');
+	const m = String(date.getMonth() + 1).padStart(2, '0');
+	const y = date.getFullYear();
+	return `${d}-${m}-${y}`;
+}
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Reviews — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<a class="home-top" href="/">Asswitch Studio</a>
+
+		<main class="reviews">
+			<h1>REVIEWS</h1>
+
+			<ul class="list">
+				{
+					posts.map((post) => (
+						<li class="entry">
+							<a class="entry-link" href={`/blog/${post.id}/`}>
+								<p class="date">{formatDDMMYYYY(post.data.pubDate)}</p>
+								<p class="title">{post.data.title}</p>
+								<p class="description">{post.data.description}</p>
+								<p class="byline">by {post.data.author ?? DEFAULT_AUTHOR}</p>
+							</a>
+							<hr />
+						</li>
+					))
+				}
+			</ul>
+		</main>
+
+		<style>
+			.home-top {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				display: block;
+				width: 14rem;
+				margin: 0 auto;
+				text-align: center;
+				padding: 1.3rem 0 0;
+				background: #fff;
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				font-size: 0.85rem;
+				color: #888;
+				text-decoration: none;
+			}
+			.home-top:hover {
+				color: #111;
+			}
+
+			.reviews {
+				max-width: 42rem;
+				margin: 0 auto;
+				padding: 0 1.2rem 4rem;
+				text-align: center;
+			}
+
+			h1 {
+				width: 14rem;
+				margin: 0 auto 3.5rem;
+				font-family: 'Libre Caslon Display', Georgia, serif;
+				font-weight: 700;
+				font-size: 22px;
+				letter-spacing: 0.03em;
+				text-align: center;
+				white-space: nowrap;
+			}
+
+			.list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.entry {
+				margin-bottom: 2.4rem;
+			}
+
+			.entry-link {
+				display: block;
+				text-decoration: none;
+				color: inherit;
+			}
+
+			.date {
+				margin: 0;
+				font-size: 0.75rem;
+				letter-spacing: 0.08em;
+				color: #999;
+			}
+
+			.title {
+				margin: 0.4rem 0 0.7rem;
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				font-size: 1.4rem;
+			}
+			.entry-link:hover .title {
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			.description {
+				position: relative;
+				left: 50%;
+				transform: translateX(-50%);
+				width: fit-content;
+				max-width: none;
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 1rem;
+				color: #777;
+				white-space: nowrap;
+			}
+
+			.byline {
+				margin: 0.9rem 0 0;
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				font-style: italic;
+				font-size: 0.85rem;
+				letter-spacing: 0.02em;
+				color: #999;
+			}
+
+			.entry hr {
+				width: 140px;
+				margin: 1.8rem auto 0;
+				border: none;
+				border-top: 1px solid #e6e6e6;
+			}
+			.entry:last-child hr {
+				display: none;
+			}
+
+			@media (max-width: 640px) {
+				h1 {
+					font-size: 1.6rem;
+				}
+				.title {
+					font-size: 1.2rem;
+				}
+			}
+		</style>
+	</body>
+</html>

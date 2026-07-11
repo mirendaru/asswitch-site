@@ -2,6 +2,7 @@
 title: 'A Wider Horizon'
 description: 'On finishing Forza Horizon 6, the strange grace of Auto Drive, and why the journey is the scenery.'
 pubDate: 'Jun 05 2026'
+section: 'review'
 ---
 
 I finally made it to the island.

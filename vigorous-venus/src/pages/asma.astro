@@ -1,0 +1,193 @@
+---
+import { SITE_TITLE } from '../consts';
+
+const articles = [
+	{
+		n: 'I',
+		title: 'Establishment',
+		text: 'This Association is hereby founded by persons who have, on more than one occasion, opened an app without deciding to.',
+	},
+	{
+		n: 'II',
+		title: 'Purpose',
+		text: 'The Association exists to formally oppose social media, using channels made possible entirely by social media.',
+	},
+	{
+		n: 'III',
+		title: 'Membership',
+		text: 'Any person who has typed a message, deleted it, and typed it again is automatically a member. No application is required. No one may resign.',
+	},
+	{
+		n: 'IV',
+		title: 'Daily Limit',
+		text: 'Members shall not exceed a reasonable daily usage of social media. A reasonable amount has never been recorded and is not expected to be.',
+	},
+	{
+		n: 'V',
+		title: 'On Posting',
+		text: 'A post shall be judged not by what it says, but by how many times it was rewritten before saying it.',
+	},
+	{
+		n: 'VI',
+		title: 'On Silence',
+		text: 'Going silent for one week shall be considered an achievement. Going silent for one month shall be considered suspicious. Members are encouraged to worry about each other accordingly.',
+	},
+	{
+		n: 'VII',
+		title: 'On Likes',
+		text: 'A like is not agreement. A like is proof of presence. The Association makes no further claims about what it means to be seen.',
+	},
+	{
+		n: 'VIII',
+		title: 'On Screenshots',
+		text: 'Nothing said within the Association may be screenshotted, except the parts everyone secretly hopes will be.',
+	},
+	{
+		n: 'IX',
+		title: 'Meetings',
+		text: 'The Association shall convene whenever two or more members are, at the same time, doing absolutely nothing else.',
+	},
+	{
+		n: 'X',
+		title: 'Dissolution',
+		text: 'This Association shall be dissolved the day someone actually manages to log off. Until then, it remains, regrettably, active.',
+	},
+];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>the anti social media association — {SITE_TITLE}</title>
+		<meta name="description" content="Founding charter of the Anti Social Media Association." />
+	</head>
+	<body>
+		<a class="home-top" href="/">Asswitch Studio</a>
+
+		<center>
+			<h1>THE ANTI SOCIAL MEDIA ASSOCIATION</h1>
+			<p><i>Founding Charter</i></p>
+		</center>
+
+		<hr />
+
+		<div class="page">
+			<ol class="charter">
+				{
+					articles.map((a) => (
+						<li>
+							<strong>
+								Article {a.n} — {a.title}
+							</strong>
+							<p>{a.text}</p>
+						</li>
+					))
+				}
+			</ol>
+
+			<hr />
+
+			<center>
+				<div class="counter">
+					<span id="hits">000000</span>
+				</div>
+				<p class="fineprint">visitors since the association was founded</p>
+				<p class="fineprint">best viewed at any resolution, we're not picky</p>
+				<p>
+					<a href="/">back to Asswitch Studio</a>
+				</p>
+			</center>
+		</div>
+
+		<style is:global>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: #ffffff;
+				color: #000000;
+				font-family: 'Times New Roman', Times, serif;
+			}
+			a {
+				color: #0000ee;
+			}
+			a:visited {
+				color: #551a8b;
+			}
+		</style>
+
+		<style>
+			.home-top {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				display: block;
+				text-align: center;
+				padding: 0.6rem 0;
+				background: #ffffff;
+				font-family: 'Times New Roman', Times, serif;
+				font-size: 0.9rem;
+				color: #0000ee;
+				text-decoration: underline;
+			}
+
+			h1 {
+				font-size: 1.7rem;
+				margin: 1.5rem 0 0.2rem;
+			}
+
+			.page {
+				max-width: 640px;
+				margin: 1.5rem auto 3rem;
+				padding: 0 1.2rem;
+				font-size: 1.05rem;
+				line-height: 1.6;
+			}
+
+			.charter {
+				padding-left: 1.4rem;
+			}
+			.charter li {
+				margin-bottom: 1.3rem;
+			}
+			.charter li p {
+				margin: 0.3rem 0 0;
+			}
+
+			.counter {
+				display: inline-block;
+				background: #000000;
+				color: #00ff00;
+				font-family: 'Courier New', Courier, monospace;
+				font-size: 1.3rem;
+				letter-spacing: 0.25em;
+				padding: 0.25rem 0.6rem;
+				border: 2px inset #888888;
+			}
+
+			.fineprint {
+				font-size: 0.8rem;
+				color: #444444;
+				margin: 0.6rem 0 0;
+			}
+		</style>
+
+		<script>
+			// A per-browser hit count, not a true sitewide tally (this is a
+			// static site with no backend). Charmingly unreliable, as intended.
+			(function () {
+				const KEY = 'asma-hits';
+				const el = document.getElementById('hits');
+				if (!el) return;
+				let n = parseInt(localStorage.getItem(KEY) || '128401', 10);
+				n += 1;
+				try {
+					localStorage.setItem(KEY, String(n));
+				} catch {}
+				el.textContent = String(n).padStart(6, '0');
+			})();
+		</script>
+	</body>
+</html>

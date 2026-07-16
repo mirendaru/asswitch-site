@@ -12,10 +12,6 @@ const path = Astro.url.pathname;
 
 <html lang="en">
 	<head>
-<link
-  rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
-/>
 		<BaseHead title={title} description={description} />
 		<style>
 			main {
@@ -32,9 +28,10 @@ const path = Astro.url.pathname;
 			  text-align: center;
 			  padding: 1.3rem 0;
 			  background: #fff;
+			  font-family: Helvetica, Arial, sans-serif;
 			  font-size: 0.85rem;
 			  letter-spacing: 0.02em;
-			  color: #888;
+			  color: #7b2f2c;
 			  text-decoration: none;
 			}
 			.home-top:hover {
@@ -70,6 +67,18 @@ const path = Astro.url.pathname;
 			  margin-top: 2.5rem;
 			  line-height: 1.7;
 			  font-size: 1.1rem;
+			}
+
+			/* Standard publishing convention: no blank line between paragraphs;
+			   the first paragraph sits flush, every one after is indented.
+			   :global() is required — the <p> tags come from each post's own
+			   markdown render, which is a separate Astro scope from this layout. */
+			.content :global(p) {
+			  margin: 0 0 8pt;
+			  text-indent: 1.25em;
+			}
+			.content :global(p:first-of-type) {
+			  text-indent: 0;
 			}
 		</style>
 	</head>

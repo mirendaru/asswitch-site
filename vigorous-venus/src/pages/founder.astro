@@ -9,65 +9,96 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		<BaseHead title={`Founder — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<a class="home-top" href="/">Asswitch Studio</a>
+		<a class="home-top" href="/">asswitch</a>
 
 		<main class="founder">
-			<h1 class="name">PGE</h1>
-			<p class="subtitle">aka. Elliot Sim</p>
-			<p class="subtitle">the founder of Asswitch Studio</p>
+			<header class="masthead">
+				<h1 class="name">PGE</h1>
+				<p class="subtitle">Sim Chen</p>
+				<p class="role">founder, Asswitch Studio</p>
+			</header>
 
-			<div class="bio">
-				<p>Plays with cameras and what cameras produce.</p>
-				<p>Writes in English and Chinese.</p>
-				<p>Matcha enthusiast.</p>
-				<p>Gallery goer.</p>
-				<p>SNL watcher.</p>
-				<p>Always wants to play tennis.</p>
-				<p>Fan of Tina Fey, Steve Jobs and Andy Warhol.</p>
-			</div>
+			<ul class="bio">
+				<li>Plays with cameras and what cameras produce.</li>
+				<li>Writes in English and Chinese.</li>
+				<li>Matcha enthusiast.</li>
+				<li>Gallery goer.</li>
+				<li>SNL watcher.</li>
+				<li>Always wants to play tennis.</li>
+				<li>Fan of Tina Fey, Steve Jobs and Andy Warhol.</li>
+			</ul>
 
-			<div class="contact">
-				<p>contact info: <a href="mailto:pp@asswitch.studio">pp@asswitch.studio</a></p>
-				<p>instagram: <a href="https://instagram.com/P9653_">@P9653_</a></p>
-			</div>
+			<dl class="contact">
+				<dt>email</dt>
+				<dd><a href="mailto:pp@asswitch.studio">pp@asswitch.studio</a></dd>
+				<dt>instagram</dt>
+				<dd><a href="https://instagram.com/P9653_">@P9653_</a></dd>
+			</dl>
 		</main>
 
 		<style>
 			.founder {
-				max-width: 32rem;
-				margin: 30vh auto 0 auto;
+				max-width: 26rem;
+				margin: 22vh auto 6rem;
 				font-size: 0.95rem;
-				line-height: 1.6;
+				line-height: 1.65;
+			}
+
+			.masthead {
+				margin-bottom: 2.75rem;
 			}
 
 			.name {
-				font-size: 1.5rem;
+				margin: 0;
+				font-size: 2.25rem;
 				font-weight: normal;
-				margin-bottom: 0.6rem;
+				letter-spacing: 0.01em;
+				line-height: 1.1;
 			}
 
 			.subtitle {
-				margin: 0;
+				margin: 0.5rem 0 0;
+				font-size: 0.95rem;
+			}
+
+			.role {
+				margin: 0.15rem 0 0;
 				font-size: 0.8rem;
-				opacity: 0.7;
+				letter-spacing: 0.03em;
+				color: #999;
 			}
 
 			.bio {
-				margin-top: 1.5rem;
+				list-style: none;
+				margin: 0;
+				padding: 0;
 			}
-			.bio p {
-				margin: 0.25rem 0;
+			.bio li {
+				margin: 0.3rem 0;
 			}
 
 			.contact {
-				margin-top: 3rem;
+				display: grid;
+				grid-template-columns: 5.5rem 1fr;
+				gap: 0.3rem 0;
+				margin: 2.75rem 0 0;
+				padding-top: 1.5rem;
+				border-top: 1px solid #e6e6e6;
 				font-size: 0.85rem;
 			}
+			.contact dt {
+				color: #999;
+			}
+			.contact dd {
+				margin: 0;
+			}
 			.contact a {
+				color: inherit;
 				text-decoration: none;
 			}
 			.contact a:hover {
 				text-decoration: underline;
+				text-underline-offset: 3px;
 			}
 
 			.home-top {
@@ -78,8 +109,11 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				text-align: center;
 				padding: 1.3rem 0;
 				background: #fff;
-				font-family: Helvetica, Arial, sans-serif;
+				font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 				font-size: 0.85rem;
+				font-weight: 600;
+				font-stretch: expanded;
+				font-variation-settings: 'wdth' 125;
 				letter-spacing: 0.02em;
 				color: #7b2f2c;
 				text-decoration: none;
@@ -88,11 +122,16 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 				color: #111;
 			}
 
-			@media (max-width: 999px) {
+			@media (max-width: 768px) {
 				.founder {
-					margin: 18vh auto 0;
+					margin: 14vh auto 4rem;
 					padding: 0 1.2rem;
-					max-width: 100%;
+				}
+				.name {
+					font-size: 1.9rem;
+				}
+				.contact {
+					grid-template-columns: 4.75rem 1fr;
 				}
 			}
 		</style>

@@ -1,0 +1,266 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE } from '../consts';
+
+const paragraphs = [
+	'I like writing. Even though writing is hard.',
+	"I don't like other hard things.",
+	'I like essays. They let me off anyone’s rules, and they let me seem hard to pin down. The other reason I like them is that most days I don’t know who I am either.',
+	'As a student I bought notebooks. And pens. Far more than I could use, the way you’d hoard a weapon.',
+	'Then came computers. I wrote in office software, then in apps built for writing. Something was always missing from them. None of them gave me back the person who wrote by hand.',
+	'Where are we now?',
+	'AI writes the thesis. The report, the novel, the code.',
+	'And we sit on the sofa, one thumb moving up a screen that has no bottom. Looking at things nobody can tell were written by a person. Things we have agreed to call content.',
+	'An essay should always be made by a person, for people, and it should look at them.',
+	'As for AI, it should be helping us build tools that are more ours.',
+	'A writing tool, maybe?',
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title={`Another writing app？ — ${SITE_TITLE}`}
+			description="A writing tool, maybe? Coming fall 2026."
+		/>
+	</head>
+	<body>
+		<!-- One tall track. The stage inside stays pinned, so the wheel turns
+		     but the page holds still and only the layers change. -->
+		<div class="scroller">
+			<div class="stage">
+				<section class="prose layer">
+					{paragraphs.map((p) => <p>{p}</p>)}
+				</section>
+
+				<figure class="shot layer">
+					<img
+						src="/images/p4-preview.jpg"
+						width="1536"
+						height="1024"
+						alt="A long table with loose pages laid across it, in an empty room."
+					/>
+				</figure>
+
+				<p class="coming">coming fall 2026</p>
+
+				<p class="back"><a href="/">back to asswitch</a></p>
+			</div>
+		</div>
+
+		<style is:global>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: #fff;
+			}
+		</style>
+
+		<style>
+			.scroller {
+				position: relative;
+				height: 420vh;
+			}
+
+			.stage {
+				position: sticky;
+				top: 0;
+				height: 100vh;
+				overflow: hidden;
+			}
+
+			.layer {
+				position: absolute;
+				inset: 0;
+				margin: 0;
+			}
+
+			/* Copy: sized against viewport height so the whole passage always
+			   fits on one screen — it is never scrolled, only faded. */
+			.prose {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				box-sizing: border-box;
+				max-width: 34rem;
+				margin: 0 auto;
+				padding: 0 1.4rem;
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				font-size: clamp(0.86rem, 1.85vh, 1.05rem);
+				line-height: 1.75;
+				text-align: justify;
+				hyphens: auto;
+				-webkit-hyphens: auto;
+			}
+			.prose p {
+				margin: 0 0 1.1em;
+			}
+			.prose p:last-child {
+				margin-bottom: 0;
+			}
+
+			/* Fills the viewport once the copy clears. */
+			.shot {
+				opacity: 0;
+			}
+			.shot img {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			/* Placed in the open floor beneath the tabletop; JS keeps it there
+			   as the cover-cropped image shifts with the viewport's ratio. */
+			.coming {
+				position: absolute;
+				left: 50%;
+				top: 66%;
+				transform: translateX(-50%);
+				margin: 0;
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 0.82rem;
+				letter-spacing: 0.06em;
+				color: #cecece;
+				white-space: nowrap;
+				opacity: 0;
+			}
+
+			.back {
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: 2.6rem;
+				margin: 0;
+				text-align: center;
+				opacity: 0;
+				transition: opacity 0.9s ease;
+			}
+			.stage.ready .back {
+				opacity: 1;
+				/* the beat after the line lands */
+				transition-delay: 1s;
+			}
+			.back a {
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 0.8rem;
+				letter-spacing: 0.04em;
+				color: #cecece;
+				text-decoration: none;
+				transition: color 0.3s ease;
+			}
+			.back a:hover {
+				color: #fff;
+			}
+
+			/* No pinning when motion is reduced: plain stacked page. */
+			@media (prefers-reduced-motion: reduce) {
+				.scroller {
+					height: auto;
+				}
+				.stage {
+					position: static;
+					height: auto;
+					overflow: visible;
+				}
+				.layer {
+					position: static;
+				}
+				.prose {
+					padding: 22vh 1.4rem 0;
+				}
+				.shot {
+					opacity: 1;
+					margin-top: 12vh;
+				}
+				.shot img {
+					height: auto;
+				}
+				.coming {
+					position: static;
+					transform: none;
+					opacity: 1;
+					text-align: center;
+					color: #4a4a4a;
+					margin-top: 1.5rem;
+				}
+				.back {
+					position: static;
+					opacity: 1;
+					margin: 4rem 0 6rem;
+				}
+				.back a {
+					color: #b5b5b5;
+				}
+			}
+
+			@media (max-width: 768px) {
+				.scroller {
+					height: 360vh;
+				}
+				.coming {
+					font-size: 0.72rem;
+				}
+			}
+		</style>
+
+		<script>
+			const scroller = document.querySelector<HTMLElement>('.scroller');
+			const stage = document.querySelector<HTMLElement>('.stage');
+			const prose = document.querySelector<HTMLElement>('.prose');
+			const shot = document.querySelector<HTMLElement>('.shot');
+			const coming = document.querySelector<HTMLElement>('.coming');
+			const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			// Where the open floor under the table sits inside the source photo.
+			const IMG_W = 1536;
+			const IMG_H = 1024;
+			const SPOT_Y = 680;
+
+			const ramp = (p: number, from: number, to: number) =>
+				Math.min(1, Math.max(0, (p - from) / (to - from)));
+
+			// The photo is drawn with object-fit: cover, so the table drifts as the
+			// viewport ratio changes. Track it instead of trusting a fixed percent.
+			function placeComing() {
+				if (!stage || !coming) return;
+				const { width, height } = stage.getBoundingClientRect();
+				const scale = Math.max(width / IMG_W, height / IMG_H);
+				const offsetY = (height - IMG_H * scale) / 2;
+				const y = offsetY + SPOT_Y * scale;
+				coming.style.top = Math.round(Math.min(y, height - 40)) + 'px';
+			}
+
+			function update() {
+				if (!scroller || !stage || !prose || !shot || !coming) return;
+				const travel = scroller.offsetHeight - window.innerHeight;
+				const p =
+					travel > 0
+						? Math.min(1, Math.max(0, -scroller.getBoundingClientRect().top / travel))
+						: 1;
+
+				// copy holds, then clears; the photo takes the screen; then the line.
+				prose.style.opacity = String(1 - ramp(p, 0.12, 0.3));
+				shot.style.opacity = String(ramp(p, 0.26, 0.46));
+
+				const c = ramp(p, 0.58, 0.78);
+				coming.style.opacity = String(c);
+				stage.classList.toggle('ready', c >= 1);
+			}
+
+			if (!reduced) {
+				placeComing();
+				update();
+				// Each pass is three opacity writes, so run it straight off the
+				// scroll event rather than deferring to a frame callback.
+				window.addEventListener('scroll', update, { passive: true });
+				window.addEventListener('resize', () => {
+					placeComing();
+					update();
+				});
+			}
+		</script>
+	</body>
+</html>

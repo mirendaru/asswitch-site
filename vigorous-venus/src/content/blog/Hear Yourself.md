@@ -62,5 +62,3 @@ I don't remember how we eventually found the place. What I'll never forget is th
 But we couldn't walk another step. Let's just get a cab.
 
 Three minutes in the car. Arrived. 40 yuan.
-
-Worth every penny.

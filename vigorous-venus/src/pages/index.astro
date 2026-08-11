@@ -7,6 +7,7 @@ const words = [
 	{ label: 'Founder', href: '/founder', top: 23, left: 20 },
 	{ label: 'publication', href: '#', top: 31, left: 8 },
 	{ label: 'murmurs', href: '#', top: 36, left: 35 },
+	{ label: 'Another writing app？', href: '/another-writing-app', top: 44, left: 50 },
 	{ label: 'PAHF！', href: '#', top: 26, left: 58 },
 	{ label: 'No More School', href: '#', top: 28, left: 80 },
 	{ label: 'Reviews', href: '/reviews', top: 43, left: 12 },
@@ -46,6 +47,8 @@ const words = [
 							class:list={['word', w.href === '#' ? 'inactive' : 'active']}
 							href={w.href}
 							style={`top:${w.top}%; left:${w.left}%`}
+							data-top={w.top}
+							data-left={w.left}
 						>
 							{w.label}
 						</a>
@@ -59,6 +62,24 @@ const words = [
 			</nav>
 
 			<p class="construction">some pages are under construction</p>
+
+			<!-- Visitor controls: recolour the links, or put them back where
+			     they started after dragging them around. -->
+			<div class="picker">
+				<div class="palette" id="palette" hidden>
+					<div class="wheel" id="wheel">
+						<span class="knob" id="knob"></span>
+					</div>
+				</div>
+				<button
+					class="swatch"
+					type="button"
+					id="swatch"
+					aria-label="pick a link colour"
+					aria-expanded="false"
+				/>
+			</div>
+			<button class="reset" type="button" id="reset-positions">reset</button>
 		</main>
 
 		<style is:global>
@@ -112,10 +133,123 @@ const words = [
 				left: 50%;
 				transform: translateX(-50%);
 				margin: 0;
-				font-size: 0.7rem;
+				font-size: 0.62rem;
 				letter-spacing: 0.03em;
-				color: rgba(255, 255, 255, 0.7);
+				color: rgba(255, 255, 255, 0.42);
+				filter: blur(0.4px);
 				pointer-events: none;
+			}
+
+			/* Both controls stay smaller than the link text. */
+			.picker,
+			.reset {
+				position: fixed;
+				bottom: 0.9rem;
+				z-index: 5;
+				font-size: clamp(0.62rem, 0.82vw, 0.82rem);
+			}
+
+			.picker {
+				left: 1.1rem;
+				line-height: 0;
+			}
+
+			.swatch {
+				display: block;
+				width: 0.95em;
+				height: 0.95em;
+				padding: 0;
+				border: 1px solid rgba(255, 255, 255, 0.55);
+				border-radius: 50%;
+				background: var(--link-colour, #fff);
+				cursor: pointer;
+				transition: transform 0.25s ease;
+			}
+			.swatch:hover {
+				transform: scale(1.15);
+			}
+
+			/* Rounded slab of frosted glass floating above the swatch. */
+			.palette {
+				position: absolute;
+				bottom: calc(100% + 0.55rem);
+				left: -0.35rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 132px;
+				height: 122px;
+				border: 1px solid rgba(255, 255, 255, 0.22);
+				border-radius: 18px;
+				background: rgba(255, 255, 255, 0.1);
+				backdrop-filter: blur(18px) saturate(1.5);
+				-webkit-backdrop-filter: blur(18px) saturate(1.5);
+				box-shadow: 0 8px 26px rgba(0, 0, 0, 0.3);
+				animation: palette-in 0.24s ease;
+			}
+			.palette[hidden] {
+				display: none;
+			}
+
+			@keyframes palette-in {
+				from {
+					opacity: 0;
+					transform: translateY(5px) scale(0.94);
+				}
+				to {
+					opacity: 1;
+					transform: none;
+				}
+			}
+
+			/* Hue around the rim, washing out to white at the centre. */
+			.wheel {
+				position: relative;
+				width: 94px;
+				height: 94px;
+				border-radius: 50%;
+				cursor: crosshair;
+				touch-action: none;
+				background:
+					radial-gradient(circle closest-side, #fff 0%, rgba(255, 255, 255, 0) 70%),
+					conic-gradient(
+						hsl(0, 100%, 50%),
+						hsl(60, 100%, 50%),
+						hsl(120, 100%, 50%),
+						hsl(180, 100%, 50%),
+						hsl(240, 100%, 50%),
+						hsl(300, 100%, 50%),
+						hsl(360, 100%, 50%)
+					);
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+			}
+
+			.knob {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 9px;
+				height: 9px;
+				border: 2px solid #fff;
+				border-radius: 50%;
+				box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+				transform: translate(-50%, -50%);
+				pointer-events: none;
+			}
+
+			.reset {
+				right: 1.1rem;
+				padding: 0;
+				border: none;
+				background: none;
+				font-family: inherit;
+				letter-spacing: 0.03em;
+				color: rgba(255, 255, 255, 0.42);
+				cursor: pointer;
+				transition: color 0.25s ease;
+			}
+			.reset:hover {
+				color: rgba(255, 255, 255, 0.85);
 			}
 
 			.word {
@@ -132,9 +266,9 @@ const words = [
 				transition: color 0.25s ease;
 			}
 
-			/* Words with a real page: white, turn green on hover */
+			/* Words with a real page: visitor-settable colour, green on hover */
 			.word.active {
-				color: #fff;
+				color: var(--link-colour, #fff);
 			}
 			.word.active:hover,
 			.word.active:focus-visible {
@@ -174,6 +308,11 @@ const words = [
 					text-align: center;
 				}
 				.scatter {
+					display: none;
+				}
+				/* No dragging or recolouring on the stacked layout. */
+				.picker,
+				.reset {
 					display: none;
 				}
 				.stacked {
@@ -330,6 +469,135 @@ const words = [
 			}
 
 			initScatter();
+
+			// Put every word back where it was authored, and forget the saved
+			// layout so a reload doesn't bring the dragged one back.
+			function initReset() {
+				const button = document.getElementById('reset-positions');
+				const words = document.querySelectorAll<HTMLAnchorElement>('.scatter .word');
+				if (!button) return;
+				button.addEventListener('click', () => {
+					try {
+						localStorage.removeItem(STORAGE_KEY);
+					} catch {}
+					words.forEach((el) => {
+						el.style.top = (el.dataset.top ?? '') + '%';
+						el.style.left = (el.dataset.left ?? '') + '%';
+						// Dragging swaps in `transform: none`; clear it so the
+						// stylesheet's centring transform applies again.
+						el.style.transform = '';
+					});
+				});
+			}
+
+			// Let visitors recolour the links, and remember their choice.
+			const COLOUR_KEY = 'asswitch:link-colour';
+
+			function initColourPicker() {
+				const swatch = document.getElementById('swatch');
+				const palette = document.getElementById('palette');
+				if (!swatch || !palette) return;
+
+				const apply = (colour: string) => {
+					document.documentElement.style.setProperty('--link-colour', colour);
+					try {
+						localStorage.setItem(COLOUR_KEY, colour);
+					} catch {}
+				};
+
+				try {
+					const saved = localStorage.getItem(COLOUR_KEY);
+					if (saved) document.documentElement.style.setProperty('--link-colour', saved);
+				} catch {}
+
+				const close = () => {
+					palette.hidden = true;
+					swatch.setAttribute('aria-expanded', 'false');
+				};
+
+				swatch.addEventListener('click', (e) => {
+					e.stopPropagation();
+					const open = palette.hidden;
+					palette.hidden = !open;
+					swatch.setAttribute('aria-expanded', String(open));
+				});
+
+				const wheel = document.getElementById('wheel');
+				const knob = document.getElementById('knob');
+
+				// Full-brightness HSV, so the rim is pure hue and the middle is white.
+				const toHex = (h: number, s: number) => {
+					const c = s;
+					const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+					const m = 1 - c;
+					const [r, g, b] =
+						h < 60
+							? [c, x, 0]
+							: h < 120
+								? [x, c, 0]
+								: h < 180
+									? [0, c, x]
+									: h < 240
+										? [0, x, c]
+										: h < 300
+											? [x, 0, c]
+											: [c, 0, x];
+					const hex = (n: number) =>
+						Math.round((n + m) * 255)
+							.toString(16)
+							.padStart(2, '0');
+					return `#${hex(r)}${hex(g)}${hex(b)}`;
+				};
+
+				if (wheel && knob) {
+					const pick = (e: PointerEvent) => {
+						const r = wheel.getBoundingClientRect();
+						const radius = r.width / 2;
+						const dx = e.clientX - (r.left + radius);
+						const dy = e.clientY - (r.top + radius);
+						const dist = Math.hypot(dx, dy);
+						// hue runs clockwise from 12 o'clock, matching the gradient
+						const hue = (((Math.atan2(dx, -dy) * 180) / Math.PI) + 360) % 360;
+						// the white wash fades out by 70% of the radius
+						const sat = Math.min(1, dist / (radius * 0.7));
+						const capped = Math.min(dist, radius);
+						knob.style.left = `${radius + (dx / (dist || 1)) * capped}px`;
+						knob.style.top = `${radius + (dy / (dist || 1)) * capped}px`;
+						apply(toHex(hue, sat));
+					};
+
+					let dragging = false;
+
+					wheel.addEventListener('pointerdown', (e) => {
+						e.stopPropagation();
+						dragging = true;
+						// Capture keeps the drag alive outside the wheel, but a
+						// failure here must not cost us the pick itself.
+						try {
+							wheel.setPointerCapture(e.pointerId);
+						} catch {}
+						pick(e);
+					});
+					wheel.addEventListener('pointermove', (e) => {
+						if (dragging) pick(e);
+					});
+					const stop = () => {
+						dragging = false;
+					};
+					wheel.addEventListener('pointerup', stop);
+					wheel.addEventListener('pointercancel', stop);
+				}
+
+				palette.addEventListener('click', (e) => e.stopPropagation());
+
+				document.addEventListener('click', close);
+				document.addEventListener('keydown', (e) => {
+					if (e.key === 'Escape') close();
+				});
+			}
+
+			initReset();
+			initColourPicker();
 
 			// The background is painted with `cover`, so the window's crossbar
 			// lands at a different viewport y depending on the viewport's aspect

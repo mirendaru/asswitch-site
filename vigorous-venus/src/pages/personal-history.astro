@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_DESCRIPTION, SITE_TITLE, DEFAULT_AUTHOR } from '../consts';
+
+const posts = (await getCollection('blog', ({ data }) => data.section === 'history')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Personal History — ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<a class="home-top" href="/">asswitch</a>
+
+		<main class="history">
+			<h1>PERSONAL HISTORY</h1>
+
+			<ul class="list">
+				{
+					posts.map((post) => (
+						<li class="entry">
+							<a class="entry-link" href={`/blog/${post.id}/`}>
+								<p class="title">{post.data.title}</p>
+								<p class="description">{post.data.description}</p>
+								<p class="byline">by {post.data.author ?? DEFAULT_AUTHOR}</p>
+							</a>
+							<hr />
+						</li>
+					))
+				}
+			</ul>
+		</main>
+
+		<style>
+			.home-top {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				display: block;
+				width: 14rem;
+				margin: 0 auto;
+				text-align: center;
+				padding: 1.3rem 0 0;
+				background: #fff;
+				font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+				font-size: 0.85rem;
+				font-weight: 600;
+				font-stretch: expanded;
+				font-variation-settings: 'wdth' 125;
+				color: #7b2f2c;
+				text-decoration: none;
+			}
+			.home-top:hover {
+				color: #111;
+			}
+
+			.history {
+				max-width: 42rem;
+				margin: 0 auto;
+				padding: 0 1.2rem 4rem;
+				text-align: center;
+			}
+
+			h1 {
+				width: 14rem;
+				margin: 0 auto 3.5rem;
+				font-family: 'Libre Caslon Display', Georgia, serif;
+				font-weight: 700;
+				font-size: 22px;
+				letter-spacing: 0.03em;
+				text-align: center;
+				white-space: nowrap;
+			}
+
+			.list {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+
+			.entry {
+				margin-bottom: 2.4rem;
+			}
+
+			.entry-link {
+				display: block;
+				text-decoration: none;
+				color: inherit;
+			}
+
+			.title {
+				margin: 0 0 0.45rem;
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				font-size: 1.4rem;
+			}
+			.entry-link:hover .title {
+				text-decoration: underline;
+				text-underline-offset: 3px;
+			}
+
+			/* Undated pieces, so the blurb carries the line on its own —
+			   allowed to wrap rather than run off the column. */
+			.description {
+				max-width: 30rem;
+				margin: 0 auto;
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 1rem;
+				line-height: 1.55;
+				color: #777;
+				/* even out the lines so centring doesn't leave a stray last word */
+				text-wrap: balance;
+			}
+
+			.byline {
+				margin: 0.55rem 0 0;
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				font-style: italic;
+				font-size: 0.85rem;
+				letter-spacing: 0.02em;
+				color: #999;
+			}
+
+			.entry hr {
+				width: 140px;
+				margin: 1.8rem auto 0;
+				border: none;
+				border-top: 1px solid #e6e6e6;
+			}
+			.entry:last-child hr {
+				display: none;
+			}
+
+			@media (max-width: 640px) {
+				h1 {
+					font-size: 1.4rem;
+				}
+				.title {
+					font-size: 1.2rem;
+				}
+				.description {
+					font-size: 0.95rem;
+				}
+			}
+		</style>
+	</body>
+</html>

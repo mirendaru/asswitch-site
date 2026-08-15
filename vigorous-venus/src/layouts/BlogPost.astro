@@ -83,6 +83,13 @@ const path = Astro.url.pathname;
 			.content :global(p:first-of-type) {
 			  text-indent: 0;
 			}
+			/* A paragraph opening a section starts flush, same as the first one. */
+			.content :global(h1 + p),
+			.content :global(h2 + p),
+			.content :global(h3 + p),
+			.content :global(h4 + p) {
+			  text-indent: 0;
+			}
 		</style>
 	</head>
 

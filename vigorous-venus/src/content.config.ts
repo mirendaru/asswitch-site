@@ -12,7 +12,7 @@ const blog = defineCollection({
 			// Who wrote it. Optional — falls back to DEFAULT_AUTHOR when omitted.
 			author: z.string().optional(),
 			// Which listing this post belongs to. Defaults to 'essay' (shows in Essays).
-			section: z.enum(['essay', 'review']).default('essay'),
+			section: z.enum(['essay', 'review', 'history']).default('essay'),
 			// Transform string to Date object
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),

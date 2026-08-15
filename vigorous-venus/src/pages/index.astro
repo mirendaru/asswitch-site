@@ -18,6 +18,7 @@ const words = [
 	{ label: 'Designing Summer', href: '#', top: 59, left: 64 },
 	{ label: 'Gogotein Gallery', href: '#', top: 65, left: 88 },
 	{ label: 'research', href: '#', top: 62, left: 36 },
+	{ label: 'Personal History', href: '/personal-history', top: 57, left: 22 },
 	{ label: 'home improvement', href: '#', top: 67, left: 15 },
 	{ label: 'THE ANTI SOCIAL MEDIA ASSOCIATION', href: '/asma', top: 71, left: 54 },
 	{ label: 'RUSTICITAS ANIMI ET NUDA ORATIO', href: '/rusticitas', top: 74, left: 74 },
@@ -35,6 +36,14 @@ const words = [
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{SITE_TITLE}</title>
 		<meta name="description" content={SITE_DESCRIPTION} />
+
+		<!-- The scattered links are set in the same serif as the writing. -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&display=swap"
+		/>
 	</head>
 	<body>
 		<main class="stage" style="background-image: url('/images/home-background.jpg')">
@@ -58,10 +67,17 @@ const words = [
 
 			<!-- Plain stacked fallback for small screens -->
 			<nav class="stacked" aria-label="Site (compact)">
-				{words.map((w) => <a href={w.href}>{w.label}</a>)}
+				{
+					words.map((w) => (
+						<a class:list={[w.href === '#' ? 'inactive' : 'active']} href={w.href}>
+							{w.label}
+						</a>
+					))
+				}
 			</nav>
 
-			<p class="construction">some pages are under construction</p>
+			<p class="construction wide-only">some pages are under construction</p>
+			<p class="construction narrow-only">best viewed on a desktop browser</p>
 
 			<!-- Visitor controls: recolour the links, or put them back where
 			     they started after dragging them around. -->
@@ -138,6 +154,9 @@ const words = [
 				color: rgba(255, 255, 255, 0.42);
 				filter: blur(0.4px);
 				pointer-events: none;
+			}
+			.narrow-only {
+				display: none;
 			}
 
 			/* Both controls stay smaller than the link text. */
@@ -257,7 +276,9 @@ const words = [
 				transform: translate(-50%, -50%);
 				color: #fff;
 				text-decoration: none;
-				font-size: clamp(0.8rem, 1.05vw, 1.05rem);
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				/* nudged up a touch — the serif reads smaller than the sans did */
+				font-size: clamp(0.85rem, 1.12vw, 1.15rem);
 				white-space: nowrap;
 				cursor: grab;
 				user-select: none;
@@ -315,18 +336,36 @@ const words = [
 				.reset {
 					display: none;
 				}
+				/* One centred column, sized down so the longer titles fit. */
 				.stacked {
 					display: flex;
 					flex-direction: column;
-					gap: 1rem;
+					align-items: center;
+					text-align: center;
+					gap: 0.7rem;
 				}
 				.stacked a {
-					color: #fff;
 					text-decoration: none;
-					font-size: 1.15rem;
+					font-family: 'Libre Caslon Text', Georgia, serif;
+					font-size: 0.9rem;
+					line-height: 1.35;
 				}
-				.stacked a:active {
+				/* same signal as the desktop scatter: grey means nothing to open yet */
+				.stacked a.active {
+					color: var(--link-colour, #fff);
+				}
+				.stacked a.inactive {
+					color: #8f8f8f;
+				}
+				.stacked a.active:active {
 					color: #b9e580;
+				}
+
+				.wide-only {
+					display: none;
+				}
+				.narrow-only {
+					display: block;
 				}
 			}
 		</style>

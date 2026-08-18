@@ -37,12 +37,11 @@ const words = [
 		<title>{SITE_TITLE}</title>
 		<meta name="description" content={SITE_DESCRIPTION} />
 
-		<!-- The scattered links are set in the same serif as the writing. -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			rel="stylesheet"
-			href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text&display=swap"
+			href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600&display=swap"
 		/>
 	</head>
 	<body>
@@ -276,9 +275,10 @@ const words = [
 				transform: translate(-50%, -50%);
 				color: #fff;
 				text-decoration: none;
-				font-family: 'Libre Caslon Text', Georgia, serif;
-				/* nudged up a touch — the serif reads smaller than the sans did */
-				font-size: clamp(0.85rem, 1.12vw, 1.15rem);
+				font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+				/* small x-height, so it needs a size up and a little air */
+				font-size: clamp(0.95rem, 1.25vw, 1.3rem);
+				letter-spacing: 0.03em;
 				white-space: nowrap;
 				cursor: grab;
 				user-select: none;
@@ -346,9 +346,10 @@ const words = [
 				}
 				.stacked a {
 					text-decoration: none;
-					font-family: 'Libre Caslon Text', Georgia, serif;
-					font-size: 0.9rem;
-					line-height: 1.35;
+					font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+					font-size: 1rem;
+					line-height: 1.4;
+					letter-spacing: 0.03em;
 				}
 				/* same signal as the desktop scatter: grey means nothing to open yet */
 				.stacked a.active {

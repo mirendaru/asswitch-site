@@ -1,0 +1,47 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`ads — ${SITE_TITLE}`} description="Nothing here yet." />
+	</head>
+	<body>
+		<a class="home-top" href="/">asswitch</a>
+
+		<!-- Empty on purpose for now — the page exists so it can be filled. -->
+		<main class="ads"></main>
+
+		<style>
+			.home-top {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				display: block;
+				text-align: center;
+				padding: 1.3rem 0;
+				background: #fff;
+				font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+				font-size: 0.85rem;
+				font-weight: 600;
+				font-stretch: expanded;
+				font-variation-settings: 'wdth' 125;
+				letter-spacing: 0.02em;
+				color: #7b2f2c;
+				text-decoration: none;
+			}
+			.home-top:hover {
+				color: #111;
+			}
+
+			.ads {
+				max-width: 42rem;
+				margin: 0 auto;
+				padding: 0 1.2rem 6rem;
+				min-height: 40vh;
+			}
+		</style>
+	</body>
+</html>

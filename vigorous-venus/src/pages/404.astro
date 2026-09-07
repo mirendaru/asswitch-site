@@ -1,0 +1,54 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`404 — ${SITE_TITLE}`} description="Nothing at this address." />
+	</head>
+	<body>
+		<main class="void">
+			<p class="code">404</p>
+			<a class="back" href="/">back to asswitch</a>
+		</main>
+
+		<style>
+			.void {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-height: 100vh;
+				padding: 2rem 1.2rem;
+				box-sizing: border-box;
+			}
+
+			.code {
+				margin: 0;
+				/* Futura ships with macOS; Century Gothic is the nearest geometric
+				   fallback elsewhere. */
+				font-family: Futura, 'Futura PT', 'Century Gothic', 'Avenir Next', sans-serif;
+				font-weight: 500;
+				font-size: clamp(7rem, 34vw, 26rem);
+				line-height: 0.9;
+				letter-spacing: 0.02em;
+				color: #111;
+			}
+
+			.back {
+				margin-top: 2.5rem;
+				font-family: Helvetica, Arial, sans-serif;
+				font-size: 0.8rem;
+				letter-spacing: 0.04em;
+				color: #cecece;
+				text-decoration: none;
+				transition: color 0.3s ease;
+			}
+			.back:hover {
+				color: #7b2f2c;
+			}
+		</style>
+	</body>
+</html>

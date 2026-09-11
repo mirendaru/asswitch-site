@@ -7,7 +7,7 @@ const words = [
 	{ label: 'Founder', href: '/founder', top: 23, left: 20 },
 	{ label: 'publication', href: '#', top: 31, left: 8 },
 	{ label: 'murmurs', href: '#', top: 36, left: 35 },
-	{ label: 'Another writing app？', href: '/another-writing-app', top: 44, left: 50 },
+	{ label: 'Another writing app？', href: 'https://somewritingapp.com', top: 44, left: 50 },
 	{ label: 'PAHF！', href: '#', top: 26, left: 58 },
 	{ label: 'No More School', href: '#', top: 74, left: 74 },
 	{ label: 'Reviews', href: '/reviews', top: 43, left: 12 },
@@ -37,6 +37,13 @@ const words = [
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<title>{SITE_TITLE}</title>
 		<meta name="description" content={SITE_DESCRIPTION} />
+		<link rel="canonical" href={Astro.site} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.site} />
+		<meta property="og:title" content={SITE_TITLE} />
+		<meta property="og:description" content={SITE_DESCRIPTION} />
+		<meta property="og:image" content={new URL('/images/og.jpg', Astro.site)} />
+		<meta property="twitter:card" content="summary_large_image" />
 
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

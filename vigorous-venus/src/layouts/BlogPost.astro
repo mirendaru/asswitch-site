@@ -83,6 +83,15 @@ const path = Astro.url.pathname;
 			.content :global(p:first-of-type) {
 			  text-indent: 0;
 			}
+			/* Small running heads (diary dates, numbered sections): quiet, not bold. */
+			.content :global(h3) {
+			  margin: 2.4rem 0 0.7rem;
+			  font-family: Helvetica, Arial, sans-serif;
+			  font-size: 0.78rem;
+			  font-weight: 400;
+			  letter-spacing: 0.06em;
+			  color: #999;
+			}
 			/* A paragraph opening a section starts flush, same as the first one. */
 			.content :global(h1 + p),
 			.content :global(h2 + p),

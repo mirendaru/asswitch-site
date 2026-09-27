@@ -1,0 +1,308 @@
+---
+import { SITE_TITLE } from '../consts';
+import photos from '../data/iv-allofus-photos.json';
+
+// Pinned, scroll-driven: the viewport holds one fixed 16:9 stage and each
+// screen of scrolling plays the next scene. Scenes are the "IV scene NN"
+// frames in Asswitch.sketch (1920×1080). Photo tuples:
+// [photo number, x, y, w, h, z (Sketch layer order), step (reveal order; equal = together)]
+const W = 1920;
+const H = 1080;
+const pct = (v: number, of: number) => `${((v / of) * 100).toFixed(3)}%`;
+
+type Tuple = [number, number, number, number, number, number, number];
+type Scene =
+	| { kind: 'title' }
+	| { kind: 'coda' }
+	| { kind: 'bleed'; photo: number }
+	| { kind: 'photos'; photos: Tuple[] };
+
+const scenes: Scene[] = [
+	{ kind: 'title' },
+	{ kind: 'photos', photos: [[1, 158.9, 241.6, 445.7, 596.7, 0, 0], [15, 737, 241.6, 446, 597, 2, 1], [8, 1315, 241.2, 429, 597, 1, 2]] },
+	{ kind: 'photos', photos: [[6, 180, 278.2, 700, 523, 1, 0], [14, 1040, 278.6, 700, 522.8, 0, 1]] },
+	{ kind: 'photos', photos: [[9, 786, 233.8, 820, 612.4, 0, 0], [2, 299.9, 234.3, 457, 612, 1, 1]] },
+	{ kind: 'bleed', photo: 10 },
+	{ kind: 'photos', photos: [[7, 348, 158.2, 612, 820, 0, 0], [4, 960.4, 158.2, 612, 820, 1, 1]] },
+	{ kind: 'photos', photos: [[12, 253, 265.1, 447, 589, 0, 0], [13, 661, 333.4, 440, 589.1, 1, 1], [20, 1083.2, 115.4, 584, 781, 2, 2]] },
+	{ kind: 'photos', photos: [[16, 340, 191.2, 1240, 697.5, 0, 0]] },
+	{ kind: 'photos', photos: [[17, 415.9, 138, 524, 392, 2, 0], [18, 979.5, 138, 524, 391, 1, 0], [22, 979, 550.2, 523, 391, 3, 0], [19, 415.8, 549.9, 524, 392, 0, 0]] },
+	{ kind: 'photos', photos: [[21, 290.5, 40, 1338.9, 1000, 0, 0]] },
+	{ kind: 'photos', photos: [[23, 137, 323.2, 323, 432, 2, 0], [11, 543, 258.4, 420, 562.3, 1, 1], [24, 963, 266.2, 820, 547, 0, 1]] },
+	{ kind: 'photos', photos: [[26, 772, 286.6, 378, 507, 1, 0], [25, 392, 286.6, 380, 506.7, 2, 1], [27, 1150, 286.6, 378, 506, 0, 1]] },
+	{ kind: 'photos', photos: [[3, 139.7, 201.7, 505, 676, 1, 0], [5, 833, 201.5, 948, 676, 0, 1]] },
+	{ kind: 'photos', photos: [[28, 576, 156.2, 1123, 839, 0, 0]] },
+	{ kind: 'coda' },
+];
+
+const img = (n: number) => photos[n - 1];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>IV ALLOFUS — {SITE_TITLE}</title>
+		<meta name="description" content="Photographs, 2010–2012. All shot on iPhone 4." />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400&family=Libre+Caslon+Text&display=swap"
+		/>
+	</head>
+	<body>
+		<a class="mark" href="/">asswitch</a>
+
+		<div class="scroller" style={`--scenes:${scenes.length}`}>
+			<div class="stage-wrap">
+				<div class="stage">
+					{
+						scenes.map((sc) => (
+							<section class={`scene is-${sc.kind}`}>
+								{sc.kind === 'title' && (
+									<>
+										<h1 class="step title" data-step="0">IV ALLOFUS</h1>
+										<p class="step sub" data-step="1">iPhone 4, 2010–2012</p>
+									</>
+								)}
+								{sc.kind === 'coda' && (
+									<p class="step coda-line" data-step="0">
+										iPhone 4 will forever be my favorite camera.
+									</p>
+								)}
+								{sc.kind === 'bleed' && (
+									<img
+										class="step photo"
+										data-step="0"
+										src={img(sc.photo).src}
+										width={img(sc.photo).width}
+										height={img(sc.photo).height}
+										loading="lazy"
+										decoding="async"
+										alt=""
+									/>
+								)}
+								{sc.kind === 'photos' &&
+									[...sc.photos]
+										.sort((a, b) => a[6] - b[6])
+										.map(([n, x, y, w, h, z, step]) => (
+											<img
+												class="step photo"
+												data-step={step}
+												src={img(n).src}
+												width={img(n).width}
+												height={img(n).height}
+												style={`left:${pct(x, W)}; top:${pct(y, H)}; width:${pct(w, W)}; height:${pct(h, H)}; z-index:${z}`}
+												loading="lazy"
+												decoding="async"
+												alt=""
+											/>
+										))}
+							</section>
+						))
+					}
+				</div>
+			</div>
+		</div>
+
+		<script>
+			const scroller = document.querySelector<HTMLElement>('.scroller')!;
+			const scenes = [...document.querySelectorAll<HTMLElement>('.scene')].map((el) => {
+				const steps = [...el.querySelectorAll<HTMLElement>('.step')];
+				const count = Math.max(...steps.map((s) => Number(s.dataset.step))) + 1;
+				return { el, steps, count };
+			});
+			const phone = matchMedia('(max-width: 768px)');
+			const still = matchMedia('(prefers-reduced-motion: reduce)');
+			const clamp = (v: number) => Math.min(1, Math.max(0, v));
+
+			function render() {
+				if (phone.matches) return;
+				const span = scroller.offsetHeight - innerHeight;
+				// 0 … scenes.length, one unit per screen of scrolling
+				const p = clamp(-scroller.getBoundingClientRect().top / span) * scenes.length - 1e-6;
+
+				scenes.forEach(({ el, steps, count }, i) => {
+					const t = p - i; // 0…1 while this scene is on stage
+					const last = i === scenes.length - 1;
+					const out = last ? 1 : 1 - clamp((t - 0.84) / 0.16);
+					el.style.visibility = t > -0.2 && t < 1 ? 'visible' : 'hidden';
+
+					steps.forEach((s) => {
+						const k = Number(s.dataset.step);
+						// the title card is already up when the page opens
+						const start = i === 0 ? -1 : 0.04 + (0.46 * k) / count;
+						const a = clamp((t - start) / 0.16);
+						s.style.opacity = String(a * out);
+						s.style.transform = still.matches ? '' : `translateY(${(1 - a) * 18}px)`;
+					});
+				});
+			}
+
+			addEventListener('scroll', render, { passive: true });
+			addEventListener('resize', render);
+			render();
+		</script>
+
+		<style is:global>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				background: #26292a;
+			}
+		</style>
+
+		<style>
+			.mark {
+				position: fixed;
+				z-index: 50;
+				top: 4.5vh;
+				left: 50%;
+				transform: translateX(-50%);
+				font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+				font-size: clamp(0.85rem, 0.94vw, 1.125rem);
+				font-weight: 600;
+				font-stretch: expanded;
+				font-variation-settings: 'wdth' 125;
+				color: #b9e580;
+				text-decoration: none;
+				transition: color 0.25s ease;
+			}
+			.mark:hover {
+				color: #fff;
+			}
+
+			/* One screen of scrolling per scene; the stage stays pinned. */
+			.scroller {
+				height: calc(var(--scenes) * 100vh);
+			}
+			.stage-wrap {
+				position: sticky;
+				top: 0;
+				height: 100vh;
+				display: grid;
+				place-items: center;
+				overflow: hidden;
+			}
+			.stage {
+				position: relative;
+				width: min(100vw, calc(100vh * 16 / 9));
+				aspect-ratio: 16 / 9;
+				container-type: inline-size;
+			}
+
+			.scene {
+				position: absolute;
+				inset: 0;
+				visibility: hidden;
+			}
+			.scene > * {
+				position: absolute;
+				margin: 0;
+				opacity: 0;
+				will-change: opacity, transform;
+			}
+
+			.photo {
+				display: block;
+				object-fit: cover;
+			}
+
+			/* Full-bleed scene: breaks out of the stage to fill the window
+			   (the stage is a containment box, so fixed positioning can't). */
+			.is-bleed .photo {
+				left: calc(50% - 50vw);
+				top: calc(50% - 50vh);
+				width: 100vw;
+				height: 100vh;
+			}
+
+			/* Title card — Josefin Sans, 109px on the 1920 frame. */
+			.title,
+			.sub {
+				left: 0;
+				right: 0;
+				text-align: center;
+				font-family: 'Josefin Sans', 'Gill Sans', sans-serif;
+				font-weight: 400;
+				line-height: 1;
+			}
+			.title {
+				top: 44.9%;
+				font-size: max(2.4rem, 5.677cqw);
+				color: #e9ede6;
+			}
+			.sub {
+				top: 57.5%;
+				font-size: max(0.72rem, 0.833cqw);
+				color: rgba(255, 255, 255, 0.45);
+			}
+
+			.coda-line {
+				top: 49.5%;
+				left: 0;
+				right: 0;
+				text-align: center;
+				font-family: 'Libre Caslon Text', Georgia, serif;
+				font-size: max(0.85rem, 0.78cqw);
+				color: #e9ede6;
+			}
+
+			/* Phones: no pinning, just the photos one after another. */
+			@media (max-width: 768px) {
+				.mark {
+					position: static;
+					display: block;
+					width: fit-content;
+					margin: 1.6rem auto 0;
+					transform: none;
+				}
+				.scroller {
+					height: auto;
+				}
+				.stage-wrap {
+					position: static;
+					height: auto;
+					display: block;
+					overflow: visible;
+				}
+				.stage {
+					width: 100%;
+					box-sizing: border-box;
+					aspect-ratio: auto;
+					padding: 2rem 1.2rem 4rem;
+					display: flex;
+					flex-direction: column;
+					gap: 2.2rem;
+				}
+				.scene {
+					position: static;
+					visibility: visible;
+					display: contents;
+				}
+				.scene > *,
+				.is-bleed .photo {
+					position: static;
+					opacity: 1;
+					transform: none;
+					width: 100% !important;
+					height: auto !important;
+				}
+				.title {
+					margin-top: 18vh;
+					font-size: 3rem;
+				}
+				.sub {
+					margin: -1.2rem 0 16vh;
+				}
+				.coda-line {
+					margin: 3rem 0;
+					font-size: 0.95rem;
+				}
+			}
+		</style>
+	</body>
+</html>

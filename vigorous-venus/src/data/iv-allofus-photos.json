@@ -1,0 +1,254 @@
+[
+	{
+		"src": "/images/iv-allofus/iv-allofus-01.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2010-11-22",
+		"x": 360,
+		"y": 440,
+		"w": 480
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-02.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2010-11-28",
+		"x": 980,
+		"y": 640,
+		"w": 220
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-03.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2010-12-25",
+		"x": 1300,
+		"y": 480,
+		"w": 360
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-04.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2010-12-31",
+		"x": 1080,
+		"y": 1060,
+		"w": 180
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-05.jpg",
+		"width": 1600,
+		"height": 1142,
+		"date": "2011-04-01",
+		"x": 420,
+		"y": 1420,
+		"w": 1080
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-06.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "n.d.",
+		"x": 160,
+		"y": 2400,
+		"w": 640
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-07.jpg",
+		"width": 1194,
+		"height": 1600,
+		"date": "2011-04-12",
+		"x": 920,
+		"y": 2560,
+		"w": 280
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-08.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2011-05-14",
+		"x": 1320,
+		"y": 2420,
+		"w": 400
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-09.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2011-05-17",
+		"x": 700,
+		"y": 3120,
+		"w": 820
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-10.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2011-05-17",
+		"x": 0,
+		"y": 3940,
+		"w": 1920
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-11.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2011-12-24",
+		"x": 240,
+		"y": 5600,
+		"w": 420
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-12.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2012-03-30",
+		"x": 820,
+		"y": 5840,
+		"w": 300
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-13.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2012-04-13",
+		"x": 1280,
+		"y": 5720,
+		"w": 440
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-14.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2012-04-19",
+		"x": 160,
+		"y": 6520,
+		"w": 700
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-15.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2012-05-01",
+		"x": 1000,
+		"y": 6660,
+		"w": 240
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-16.jpg",
+		"width": 1600,
+		"height": 900,
+		"date": "2012-05-08",
+		"x": 520,
+		"y": 7280,
+		"w": 1240
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-17.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2012-05-11",
+		"x": 160,
+		"y": 8200,
+		"w": 560
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-18.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2012-05-16",
+		"x": 860,
+		"y": 8340,
+		"w": 520
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-19.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2012-05-21",
+		"x": 1480,
+		"y": 8240,
+		"w": 280
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-20.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2012-05-24",
+		"x": 1500,
+		"y": 8880,
+		"w": 260
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-21.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2012-06-16",
+		"x": 240,
+		"y": 9400,
+		"w": 1440
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-22.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2012-07-28",
+		"x": 160,
+		"y": 10700,
+		"w": 620
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-23.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2012-08-31",
+		"x": 940,
+		"y": 10820,
+		"w": 300
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-24.jpg",
+		"width": 1600,
+		"height": 1067,
+		"date": "2012-11-09",
+		"x": 1300,
+		"y": 10700,
+		"w": 460
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-25.jpg",
+		"width": 1200,
+		"height": 1600,
+		"date": "2012-11-30",
+		"x": 420,
+		"y": 11300,
+		"w": 380
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-26.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2012-12-01",
+		"x": 960,
+		"y": 11620,
+		"w": 280
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-27.jpg",
+		"width": 1195,
+		"height": 1600,
+		"date": "2012-12-05",
+		"x": 1380,
+		"y": 11180,
+		"w": 300
+	},
+	{
+		"src": "/images/iv-allofus/iv-allofus-28.jpg",
+		"width": 1600,
+		"height": 1195,
+		"date": "2012-12-10",
+		"x": 560,
+		"y": 12160,
+		"w": 800
+	}
+]

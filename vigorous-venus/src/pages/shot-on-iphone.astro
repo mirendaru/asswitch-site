@@ -1,0 +1,113 @@
+---
+import { SITE_TITLE } from '../consts';
+
+// Photo series, grouped by the phone they were shot on.
+const series = [
+	{ title: 'RUSTICITAS ANIMI ET NUDA ORATIO', href: '/rusticitas', device: 'iPhone 7 Plus', count: 74 },
+	{ title: 'IV ALLOFUS', href: '/iv-allofus', device: 'iPhone 4', count: 28 },
+];
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>shot on iPhone — {SITE_TITLE}</title>
+		<meta name="description" content="Photographs, filed by the phone that took them." />
+	</head>
+	<body>
+		<a class="mark" href="/">asswitch</a>
+
+		<main class="series">
+			{
+				series.map((s) => (
+					<a class="row" href={s.href}>
+						<span class="title">{s.title}</span>
+						<span class="device">{s.device}</span>
+						<span class="count">{s.count}</span>
+					</a>
+				))
+			}
+		</main>
+
+		<style is:global>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				min-height: 100%;
+				background: #1f2d34 url('/images/shot-on-iphone-bg.jpg') center / cover no-repeat fixed;
+			}
+		</style>
+
+		<style>
+			/* Sizes follow the 1920×1080 Sketch frame: 18px there ≈ 0.94vw. */
+			.mark {
+				display: block;
+				width: fit-content;
+				margin: 4.5vh auto 0;
+				font-family: 'SF Pro', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+				font-size: clamp(0.95rem, 0.94vw, 1.125rem);
+				font-weight: 600;
+				font-stretch: expanded;
+				font-variation-settings: 'wdth' 125;
+				color: #b9e580;
+				text-decoration: none;
+				transition: color 0.25s ease;
+			}
+			.mark:hover {
+				color: #fff;
+			}
+
+			.series {
+				width: fit-content;
+				margin: 20vh auto 0;
+				font-family: 'Gill Sans', 'Gill Sans MT', 'Josefin Sans', sans-serif;
+				font-size: clamp(0.95rem, 0.94vw, 1.125rem);
+			}
+
+			.row {
+				display: grid;
+				grid-template-columns: 19.4em 7.2em 3.3em;
+				line-height: 2.1;
+				text-decoration: none;
+			}
+
+			.title {
+				color: #b9e580;
+				transition: color 0.25s ease;
+			}
+			.row:hover .title {
+				color: #fff;
+			}
+
+			.device,
+			.count {
+				color: rgba(255, 255, 255, 0.45);
+			}
+			.count {
+				text-align: right;
+			}
+
+			@media (max-width: 768px) {
+				.series {
+					margin-top: 16vh;
+					padding: 0 1.4rem;
+				}
+				.row {
+					grid-template-columns: 1fr auto;
+					column-gap: 1rem;
+					line-height: 1.5;
+					margin-bottom: 1.1rem;
+				}
+				.title {
+					grid-column: 1 / -1;
+				}
+				.count {
+					text-align: left;
+				}
+			}
+		</style>
+	</body>
+</html>
